@@ -27,9 +27,21 @@ Rust bindings to [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx)
 
 ## Install
 
-```console
 cargo add sherpa-rs
 ```
+
+## Custom Usage (GPU/CUDA)
+
+To use this custom fork with GPU support (e.g., CUDA), update your `Cargo.toml` as follows:
+
+```toml
+[dependencies]
+sherpa-rs = { git = "ssh://git@github.com/nasa1024/sherpa-rs.git", branch = "main", default-features = false, features = ["cuda", "tts"] }
+```
+
+> [!IMPORTANT]
+> *   **`default-features = false`**: This is required to disable `download-binaries`, forcing the crate to compile the C++ core from source using your custom submodule configuration.
+> *   **Runtime Dependencies**: Ensure your environment (Docker/Production) has the necessary CUDA dynamic libraries (e.g., `libcuda.so`, `libcudnn.so`) installed and accessible in `LD_LIBRARY_PATH`. The Rust binary links against these dynamically at runtime.
 
 ## Build
 
