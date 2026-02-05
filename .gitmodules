@@ -1,3 +1,3 @@
 [submodule "crates/sherpa-rs-sys/sherpa-onnx"]
 	path = crates/sherpa-rs-sys/sherpa-onnx
-	url = https://github.com/k2-fsa/sherpa-onnx
+	url = git@github.com:nasa1024/sherpa-onnx.git
