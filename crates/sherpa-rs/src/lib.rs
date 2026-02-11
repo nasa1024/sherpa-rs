@@ -14,6 +14,7 @@ pub mod ten_vad;
 pub mod transducer;
 pub mod whisper;
 pub mod zipformer;
+pub mod denoise;
 
 mod utils;
 
