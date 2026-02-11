@@ -64,6 +64,8 @@ impl WhisperRecognizer {
             language: language_ptr.as_ptr(),
             task: task_ptr.as_ptr(),
             tail_paddings,
+            enable_segment_timestamps: Default::default(),
+            enable_token_timestamps: Default::default(),
         };
         let model_config = unsafe {
             sherpa_rs_sys::SherpaOnnxOfflineModelConfig {
@@ -89,6 +91,9 @@ impl WhisperRecognizer {
                 zipformer_ctc: mem::zeroed::<_>(),
                 canary: mem::zeroed::<_>(),
                 wenet_ctc: mem::zeroed::<_>(),
+                funasr_nano: mem::zeroed::<_>(),
+                medasr: mem::zeroed::<_>(),
+                omnilingual: mem::zeroed::<_>(),
             }
         };
 
