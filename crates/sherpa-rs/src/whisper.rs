@@ -21,6 +21,7 @@ pub struct WhisperConfig {
     pub provider: Option<String>,
     pub num_threads: Option<i32>,
     pub debug: bool,
+    pub enable_timestamps: bool,
 }
 
 impl Default for WhisperConfig {
@@ -35,6 +36,7 @@ impl Default for WhisperConfig {
             debug: false,
             provider: None,
             num_threads: Some(1),
+            enable_timestamps: false,
         }
     }
 }
@@ -64,8 +66,8 @@ impl WhisperRecognizer {
             language: language_ptr.as_ptr(),
             task: task_ptr.as_ptr(),
             tail_paddings,
-            enable_segment_timestamps: Default::default(),
-            enable_token_timestamps: Default::default(),
+            enable_segment_timestamps: if config.enable_timestamps { 1 } else { 0 },
+            enable_token_timestamps: if config.enable_timestamps { 1 } else { 0 },
         };
         let model_config = unsafe {
             sherpa_rs_sys::SherpaOnnxOfflineModelConfig {
