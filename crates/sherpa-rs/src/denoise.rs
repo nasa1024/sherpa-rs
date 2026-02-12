@@ -65,11 +65,11 @@ impl Denoise {
         unsafe {
             // SherpaOnnxOfflineSpeechDenoiserResult *result =
             //    SherpaOnnxOfflineSpeechDenoiserCompute(denoiser, sample_rate, samples, n);
-            let result_ptr = sherpa_rs_sys::SherpaOnnxOfflineSpeechDenoiserCompute(
+            let result_ptr = sherpa_rs_sys::SherpaOnnxOfflineSpeechDenoiserRun(
                 self.denoiser,
-                sample_rate as i32,
                 samples.as_ptr(),
                 samples.len().try_into().unwrap(),
+                sample_rate as i32,
             );
 
             if result_ptr.is_null() {
@@ -77,10 +77,10 @@ impl Denoise {
             }
 
             let result = *result_ptr;
-            let samples = std::slice::from_raw_parts(result.samples, result.num_samples as usize).to_vec();
+            let samples = std::slice::from_raw_parts(result.samples, result.n as usize).to_vec();
             
             // Destroy result
-            sherpa_rs_sys::SherpaOnnxOfflineSpeechDenoiserDestroyResult(result_ptr);
+            sherpa_rs_sys::SherpaOnnxDestroyDenoisedAudio(result_ptr);
 
             Ok(samples)
         }
